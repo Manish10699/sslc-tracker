@@ -1,0 +1,643 @@
+[
+  {
+    "point_no": 1,
+    "group": "A",
+    "title_kn": "ಡಿಸೆಂಬರ್-2026 ಅಂತ್ಯದೊಳಗೆ ಪಠ್ಯಕ್ರಮ ಪೂರ್ಣಗೊಳಿಸುವಿಕೆ",
+    "title_en": "Completing syllabus by end of December 2026",
+    "columns": [
+      {
+        "id": "month",
+        "type": "month_select",
+        "label_kn": "ತಿಂಗಳು"
+      },
+      {
+        "id": "schedule_prepared",
+        "type": "yes_no",
+        "label_kn": "ವಿಷಯವಾರು ವೇಳಾಪಟ್ಟಿ ತಯಾರಿಸಲಾಗಿದೆಯೇ?"
+      },
+      {
+        "id": "monthly_lessons_ontrack",
+        "type": "yes_no",
+        "label_kn": "ವಾರ್ಷಿಕ ಪಾಠಯೋಜನೆಯನ್ವಯ ಪ್ರತಿ ತಿಂಗಳು ನಿಗದಿಪಡಿಸಿದ ಪಾಠಗಳ ಬೋಧನೆಯು ಎಲ್ಲಾ ವಿಷಯಗಳಲ್ಲಿ ನಡೆಯುತ್ತಿದೆಯೇ?"
+      },
+      {
+        "id": "lba_updated_sats",
+        "type": "yes_no",
+        "label_kn": "ಪಾಠಯೋಜನೆಯನ್ನು LBA ಪ್ರಕಾರ SATSನಲ್ಲಿ ಇಂದೀಕರಿಸಲಾಗಿದೆ"
+      },
+      {
+        "id": "info_from_all_teachers",
+        "type": "yes_no",
+        "label_kn": "ಎಲ್ಲ ವಿಷಯ ಶಿಕ್ಷಕರಿಂದ ಮಾಹಿತಿ ಪಡೆಯಲಾಗಿದೆ"
+      },
+      {
+        "id": "hm_verification",
+        "type": "yes_no",
+        "label_kn": "ವಾರ್ಷಿಕ ಪಾಠಯೋಜನೆಯನ್ವಯ ಪಾಠಗಳು ಮುಕ್ತಾಯವಾದ ಬಗ್ಗೆ ಮುಖ್ಯ ಶಿಕ್ಷಕರು ಪರಿಶೀಲನೆಯನ್ನು ನಿರಂತರವಾಗಿ ಮಾಡುತ್ತಿದ್ದಾರೆಯೇ?"
+      },
+      {
+        "id": "officer_confirmed",
+        "type": "yes_no",
+        "label_kn": "ಶಾಲೆಗೆ ಸಂದರ್ಶನ ನೀಡಿದ ಮೇಲುಸ್ತುವಾರಿ ಅಧಿಕಾರಿಗಳು ಮಾಹೆವಾರು ನಿಗದಿಪಡಿಸಿದ ಪಾಠ ಬೋಧನೆ ನಡೆಯುತ್ತಿರುವ ಬಗ್ಗೆ ದೃಢೀಕರಿಸಿದ್ದಾರೆಯೇ?",
+        "required": false
+      }
+    ]
+  },
+  {
+    "point_no": 2,
+    "group": "A",
+    "title_kn": "ಶಾಲೆಯಲ್ಲಿ ಪರಿಹಾರ ಬೋಧನೆ",
+    "title_en": "Remedial teaching in school (Setubandha / FLN identified students)",
+    "columns": [
+      {
+        "id": "month",
+        "type": "month_select",
+        "label_kn": "ತಿಂಗಳು"
+      },
+      {
+        "id": "total_students",
+        "type": "number",
+        "label_kn": "ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "achieved_competency",
+        "type": "number",
+        "label_kn": "ಸಾಮರ್ಥ್ಯ ಗಳಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "not_achieved_competency",
+        "type": "number",
+        "label_kn": "ಸಾಮರ್ಥ್ಯ ಗಳಸದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "fln_reading_not_achieved",
+        "type": "number",
+        "label_kn": "ಎಫ್.ಎಲ್.ಎನ್ ನಲ್ಲಿ ಸಾಮರ್ಥ್ಯ ಗಳಿಸದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ - Reading"
+      },
+      {
+        "id": "fln_writing_not_achieved",
+        "type": "number",
+        "label_kn": "... - Writing"
+      },
+      {
+        "id": "fln_numeracy_not_achieved",
+        "type": "number",
+        "label_kn": "... - Numeracy"
+      },
+      {
+        "id": "remedial_plan_highlights",
+        "type": "text",
+        "label_kn": "ಪರಿಹಾರ ಬೋಧನೆಗಾಗಿ ವಿದ್ಯಾರ್ಥಿವಾರು ಕ್ರಿಯಾಯೋಜನೆಯ ಪ್ರಮುಖಾಂಶಗಳು"
+      },
+      {
+        "id": "remedial_period",
+        "type": "text",
+        "label_kn": "ಪರಿಹಾರ ಬೋಧನೆ ಮಾಡುವ ಅವಧಿ"
+      },
+      {
+        "id": "total_remedial_periods",
+        "type": "number",
+        "label_kn": "ಜುಲೈ-ಡಿಸೆಂಬರ್-2026ರವರೆಗಿನ ಒಟ್ಟು ಪರಿಹಾರ ಬೋಧನೆ ಅವಧಿಗಳು"
+      },
+      {
+        "id": "info_from_all_teachers",
+        "type": "yes_no",
+        "label_kn": "ಎಲ್ಲಾ ವಿಷಯ ಶಿಕ್ಷಕರಿಂದ ಮಾಹಿತಿ ಪಡೆಯಲಾಗಿದೆ"
+      },
+      {
+        "id": "diet_schedule_prepared",
+        "type": "yes_no",
+        "label_kn": "ಡಯಟ್ ನೋಡಲ್ ಅಧಿಕಾರಿಗಳು ಶಾಲಾವಾರು ವೇಳಾ ಪಟ್ಟಿಯನ್ನು ತಯಾರಿಸಿದ್ದಾರೆಯೇ?",
+        "required": false
+      },
+      {
+        "id": "diet_officer_logged_sats",
+        "type": "yes_no",
+        "label_kn": "ಡಯಟ್ ಅಧಿಕಾರಿಗಳು ತಮ್ಮ ಹಾಜರಾತಿ ಮತ್ತು ಪರಿವೀಕ್ಷಣಾ ವಿವರವನ್ನು SATS Inspection App ನಲ್ಲಿ ನಮೂದಿಸಿರುವರೇ?",
+        "required": false
+      },
+      {
+        "id": "photo",
+        "type": "photo",
+        "label_kn": "ಸಂದರ್ಶನಾಧಿಕಾರಿಗಳು ಜಿಯೋ ಟ್ಯಾಗ್ ಫೋಟೋ ಲಗತ್ತಿಸುವುದು"
+      }
+    ]
+  },
+  {
+    "point_no": 3,
+    "group": "A",
+    "title_kn": "ಶಾಲೆಯಲ್ಲಿ ವಿಶೇಷ ತರಗತಿಗಳು",
+    "title_en": "Special classes in school",
+    "columns": [
+      {
+        "id": "month",
+        "type": "month_select",
+        "label_kn": "ತಿಂಗಳು"
+      },
+      {
+        "id": "avg_students",
+        "type": "number",
+        "label_kn": "Average ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "above_avg_students",
+        "type": "number",
+        "label_kn": "Above Average ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "below_avg_students",
+        "type": "number",
+        "label_kn": "Below Average ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "teachers_adopted_students",
+        "type": "number",
+        "label_kn": "ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ದತ್ತು ಪಡೆದ ಶಿಕ್ಷಕರ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "special_classes_conducted",
+        "type": "yes_no",
+        "label_kn": "ಪ್ರತಿದಿನ ಶಾಲಾವಧಿ ನಂತರ ವಿಶೇಷ ತರಗತಿಗಳನ್ನು ಆಯೋಜಿಸಲಾಗಿದೆ?"
+      },
+      {
+        "id": "writing_classes_conducted",
+        "type": "yes_no",
+        "label_kn": "ಶಾಲಾ ಅವಧಿ ನಂತರ ಬರವಣಿಗೆ ಹೆಚ್ಚಿಸಲು ತರಗತಿಗಳನ್ನು ಹಮ್ಮಿಕೊಳ್ಳಲಾಗಿದೆ?"
+      },
+      {
+        "id": "info_from_all_teachers",
+        "type": "yes_no",
+        "label_kn": "ಎಲ್ಲಾ ವಿಷಯ ಶಿಕ್ಷಕರಿಂದ ಮಾಹಿತಿ ಪಡೆಯಲಾಗಿದೆ?"
+      },
+      {
+        "id": "photo",
+        "type": "photo",
+        "label_kn": "ಬರವಣಿಗೆ ಮತ್ತು ವಿಶೇಷ ತರಗತಿಯ ಜಿಯೋ ಟ್ಯಾಗ್ ಫೋಟೋ ಲಗತ್ತಿಸುವುದು"
+      }
+    ]
+  },
+  {
+    "point_no": 5,
+    "group": "A",
+    "title_kn": "ಶಾಲೆಯಲ್ಲಿಯೇ ಪ್ರತಿ ಪಾಠದ ಕಲಿಕೆಯ ಮೌಲ್ಯಾಂಕನ ಮತ್ತು ವಿದ್ಯಾರ್ಥಿವಾರು ಕಲಿಕೆ ಆಧಾರಿತ ಟ್ರ್ಯಾಕಿಂಗ್ ವ್ಯವಸ್ಥೆ",
+    "title_en": "In-school per-lesson assessment and student-wise learning tracking",
+    "columns": [
+      {
+        "id": "month",
+        "type": "month_select",
+        "label_kn": "ತಿಂಗಳು"
+      },
+      {
+        "id": "total_students",
+        "type": "number",
+        "label_kn": "ಒಟ್ಟು ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "lessons_completed_as_planned",
+        "type": "number",
+        "label_kn": "ಪಾಠವನ್ನು ಕ್ರಿಯಾಯೋಜನೆಯಂತೆ ಪೂರ್ಣಗೊಳಿಸಲಾದ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "written_test_evaluated_count",
+        "type": "number",
+        "label_kn": "ವಿಷಯ ಶಿಕ್ಷಕರು ಪಾಠ ಆಧಾರಿತ ಲಿಖಿತ ಪರೀಕ್ಷೆ ನಡೆಸಿ ಮೌಲ್ಯಮಾಪನ ಮಾಡಿದ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "hm_reviewed_answer_sheets",
+        "type": "number",
+        "label_kn": "ಮುಖ್ಯ ಶಿಕ್ಷಕರು ಪರೀಕ್ಷೆಯ ಮೌಲ್ಯಮಾಪನವನ್ನು ಪರಿಶೀಲಿಸಿದ ಉತ್ತರ ಪತ್ರಿಕೆಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "reserved_for_officer_review",
+        "type": "number",
+        "label_kn": "ಮೌಲ್ಯಮಾಪನ ಮಾಡಿದ ಉತ್ತರ ಪತ್ರಿಕೆಗಳನ್ನು ಮೇಲಾಧಿಕಾರಿಗಳ ಪರಿಶೀಲನೆಗೆ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆಯೆ? ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "results_updated_sats",
+        "type": "number",
+        "label_kn": "ಎಸ್.ಎ.ಟಿ.ಎಸ್ ನಲ್ಲಿ ಫಲಿತಾಂಶವನ್ನು ಇಂದೀಕರಿಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "remedial_actions",
+        "type": "text",
+        "label_kn": "ಪಾಠವಾರು ಕಡಿಮೆ ಅಂಕ ಗಳಿಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳ ಫಲಿತಾಂಶ ವೃದ್ಧಿಗಾಗಿ ವಿದ್ಯಾರ್ಥಿವಾರು ಕೈಗೊಂಡ ಕ್ರಮಗಳು"
+      }
+    ]
+  },
+  {
+    "point_no": 4,
+    "group": "B",
+    "title_kn": "ಬೆಳಗಿನ ಪ್ರಾರ್ಥನಾ ಅವಧಿಯ ಚಟುವಟಿಕೆಗಳು",
+    "title_en": "Morning prayer period activities",
+    "columns": [
+      {
+        "id": "student_count",
+        "type": "number",
+        "label_kn": "ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "teacher_name",
+        "type": "text",
+        "label_kn": "ಶಿಕ್ಷಕರ ಹೆಸರು"
+      },
+      {
+        "id": "guidance_topic",
+        "type": "text",
+        "label_kn": "ಪ್ರಾರ್ಥನಾ ಅವಧಿಯಲ್ಲಿ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಮಾರ್ಗದರ್ಶನ ನೀಡಿದ ವಿಷಯ"
+      },
+      {
+        "id": "lifestyle_activities",
+        "type": "text",
+        "label_kn": "ಪ್ರತಿ ವಿದ್ಯಾರ್ಥಿಯು ಸಮತೋಲಿತ ಜೀವನಶೈಲಿಯನ್ನು ರೂಢಿಸಿಕೊಳ್ಳಲು ಹಮ್ಮಿಕೊಂಡ ಚಟುವಟಿಕೆಗಳು"
+      },
+      {
+        "id": "info_from_all_teachers",
+        "type": "yes_no",
+        "label_kn": "ಎಲ್ಲಾ ವಿಷಯ ಶಿಕ್ಷಕರಿಂದ ಮಾಹಿತಿ ಪಡೆಯಲಾಗಿದೆ"
+      }
+    ]
+  },
+  {
+    "point_no": 6,
+    "group": "B",
+    "title_kn": "ಪಾಲಕ/ಪೋಷಕ-ಶಿಕ್ಷಕರ ಸಭೆಯ ಮಾಹಿತಿ",
+    "title_en": "Parent-teacher meeting info",
+    "columns": [
+      {
+        "id": "meeting_date",
+        "type": "date",
+        "label_kn": "ಪೋಷಕ ಶಿಕ್ಷಕರ ಸಭೆಗಳನ್ನು ನಡೆಸಲು ನಿಗದಿಪಡಿಸಿದ ದಿನಾಂಕಗಳು"
+      },
+      {
+        "id": "mentor_names",
+        "type": "text",
+        "label_kn": "ಸಮಾಲೋಚನಾ ಸಭೆಯಲ್ಲಿ ಭಾಗವಹಿಸಿದ ಮಾರ್ಗದರ್ಶಕರ ಹೆಸರು"
+      },
+      {
+        "id": "suggestions_given",
+        "type": "text",
+        "label_kn": "ವಿದ್ಯಾರ್ಥಿವಾರು ಮನೆಯಲ್ಲಿ ಸೂಕ್ತವಾದ ಬೆಂಬಲ ನೀಡಲು ಪೋಷಕರೊಡನೆ ಸಮಾಲೋಚಿಸಿ ನೀಡಲಾದ ಸಲಹೆ ಸೂಚನೆಗಳು"
+      },
+      {
+        "id": "photo",
+        "type": "photo",
+        "label_kn": "ಪೋಷಕ-ಶಿಕ್ಷಕರ ಸಭೆಯಗಳ ಜಿಯೋ ಟ್ಯಾಗ್ ಫೋಟೋ"
+      }
+    ]
+  },
+  {
+    "point_no": 7,
+    "group": "B",
+    "title_kn": "Early Warning System - ವಿದ್ಯಾರ್ಥಿಗಳು ಶಾಲೆಗೆ ಗೈರು ಹಾಜರಾಗದಂತೆ ವಹಿಸಬೇಕಾದ ಮುಂಜಾಗೃತಾ ಕ್ರಮಗಳು",
+    "title_en": "Early Warning System - precautions against student absenteeism",
+    "columns": [
+      {
+        "id": "student_count",
+        "type": "number",
+        "label_kn": "ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "sats_daily_attendance_count",
+        "type": "number",
+        "label_kn": "ಪ್ರತಿದಿನ SATS ನಲ್ಲಿ ಹಾಜರಾತಿ ಇಂದೀಕರಿಸಲಾಗುವ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "teachers_monitor_attendance_count",
+        "type": "number",
+        "label_kn": "ಶಿಕ್ಷಕರು/ಮುಖ್ಯ ಶಿಕ್ಷಕರು ಪ್ರತಿ ವಿದ್ಯಾರ್ಥಿಯ ಹಾಜರಾತಿಯನ್ನು ಗಮನಿಸುತ್ತಾರೆ? ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "flagged_absentee_count",
+        "type": "number",
+        "label_kn": "7 ದಿನಗಳಿಗಿಂತ ಹೆಚ್ಚು/ನಿರಂತರ ಗೈರಾಗುವ ವಿದ್ಯಾರ್ಥಿಗಳಲ್ಲಿ Early Warning System ಮೂಲಕ Flag ಮಾಡಿದ ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "absence_reason",
+        "type": "text",
+        "label_kn": "ಗೈರು ಹಾಜರಾಗಲು ಕಾರಣ"
+      },
+      {
+        "id": "returned_students_count",
+        "type": "number",
+        "label_kn": "ಶಾಲೆಗೆ ಮರಳಿದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      }
+    ]
+  },
+  {
+    "point_no": 8,
+    "group": "B",
+    "title_kn": "ಶಾಲೆಯಿಂದ ಹೊರಗುಳಿದ ಮಕ್ಕಳನ್ನು ಶಾಲೆಗೆ ಕರೆತರುವುದು",
+    "title_en": "Bringing dropped-out children back to school",
+    "columns": [
+      {
+        "id": "total_class10_students",
+        "type": "number",
+        "label_kn": "10ನೇ ತರಗತಿಯ ಒಟ್ಟು ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "dropout_count",
+        "type": "number",
+        "label_kn": "ಶಾಲೆಯಿಂದ ಹೊರಗುಳಿದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "case_studies_count",
+        "type": "number",
+        "label_kn": "ನಿರಂತರ ಗೈರು ಹಾಜರಾಗುವ ವಿದ್ಯಾರ್ಥಿವಾರು ಮಾಡಿದ Case study ಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "strategy_taken",
+        "type": "text",
+        "label_kn": "ಗೈರು ಹಾಜರಿ ಮಾಡಲು ತೆಗೆದುಕೊಂಡ ಕಾರ್ಯತಂತ್ರ"
+      },
+      {
+        "id": "returned_after_home_visit",
+        "type": "number",
+        "label_kn": "ಮನೆಭೇಟಿ ಮಾಡಿ ನಂತರ ಮರಳಿ ಶಾಲೆಗೆ ಹಾಜರಾದ ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "photo",
+        "type": "photo",
+        "label_kn": "ಮಕ್ಕಳ ಮನೆಗೆ ಭೇಟಿ ನೀಡಿದ ಜಿಯೋ ಟ್ಯಾಗ್ ಫೋಟೋ"
+      }
+    ]
+  },
+  {
+    "point_no": 9,
+    "group": "B",
+    "title_kn": "ಶಾಲೆಗಳಲ್ಲಿ Buddy pairing ಮೂಲಕ ನಿಧಾನಗತಿ ಕಲಿಕಾ ವಿದ್ಯಾರ್ಥಿಗಳ ಕಲಿಕೆ ಬಲವರ್ಧನೆ",
+    "title_en": "Strengthening slow learners' learning through Buddy pairing",
+    "columns": [
+      {
+        "id": "student_count",
+        "type": "number",
+        "label_kn": "ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "slow_learners_identified",
+        "type": "number",
+        "label_kn": "ಗುರುತಿಸಿದ ನಿಧಾನಗತಿ ಕಲಿಕಾ ಲಕ್ಷಣಗಳಿರುವ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "progress_achieved_count",
+        "type": "number",
+        "label_kn": "ಕಲಿಕಾ ಪ್ರಗತಿ ಸಾಧಿಸಿರುವ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "buddy_groups_formed",
+        "type": "number",
+        "label_kn": "ರಚಿಸಿದ Buddy pairing ಗುಂಪುಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "nodal_officer_name",
+        "type": "text",
+        "label_kn": "ಶಾಲೆಗೆ ನಿಯೋಜಿಸಿದ ನೋಡಲ್ ಅಧಿಕಾರಿಯ ಹೆಸರು"
+      },
+      {
+        "id": "progressed_after_pairing_count",
+        "type": "number",
+        "label_kn": "Buddy pairing ರಚಿಸಿದ ನಂತರ ಪ್ರಗತಿ ಸಾಧಿಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "not_progressed_count",
+        "type": "number",
+        "label_kn": "ಪ್ರಗತಿ ಸಾಧಿಸದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "remedial_measures",
+        "type": "text",
+        "label_kn": "ಪ್ರಗತಿ ಸಾಧಿಸದ ವಿದ್ಯಾರ್ಥಿಗಳಿಗಾಗಿ ಹಮ್ಮಿಕೊಂಡ ಪರಿಹಾರ ಕ್ರಮಗಳು"
+      },
+      {
+        "id": "info_from_all_teachers",
+        "type": "yes_no",
+        "label_kn": "ಎಲ್ಲ ವಿಷಯ ಶಿಕ್ಷಕರಿಂದ ಮಾಹಿತಿ ಪಡೆಯಲಾಗಿದೆ"
+      },
+      {
+        "id": "nodal_officer_verified_sats",
+        "type": "yes_no",
+        "label_kn": "ನೋಡಲ್ ಅಧಿಕಾರಿಗಳು ನಿಧಾನಗತಿ ಮಕ್ಕಳ ಪ್ರಗತಿಯನ್ನು SATS Inspection App ನಲ್ಲಿ ದೃಢೀಕರಿಸಿರುವರೇ?",
+        "required": false
+      }
+    ]
+  },
+  {
+    "point_no": 10,
+    "group": "B",
+    "title_kn": "10 ನೇ ತರಗತಿಯ ವಿಷಯವಾರು ಘಟಕವಾರು ಪ್ರಶ್ನಾಕೋಠಿ",
+    "title_en": "Subject/unit-wise question bank for class 10",
+    "columns": [
+      {
+        "id": "question_bank_downloaded_count",
+        "type": "number",
+        "label_kn": "ಶಿಕ್ಷಕರು Download ಮಾಡಿದ ಪ್ರಶ್ನಾಕೋಠಿಯ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "given_to_students_count",
+        "type": "number",
+        "label_kn": "ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ನೀಡಿದ ಪ್ರಶ್ನಾಕೋಠಿಯ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "unit_tests_conducted_count",
+        "type": "number",
+        "label_kn": "ನಡೆಸಿದ ಘಟಕ ಪರೀಕ್ಷೆಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "info_from_all_teachers",
+        "type": "yes_no",
+        "label_kn": "ಎಲ್ಲ ವಿಷಯ ಶಿಕ್ಷಕರಿಂದ ಮಾಹಿತಿ ಪಡೆಯಲಾಗಿದೆ"
+      },
+      {
+        "id": "hm_meeting_on_fa1_usage",
+        "type": "yes_no",
+        "label_kn": "ಎಫ್.ಎ-1 ಪರೀಕ್ಷೆಗೆ ಪ್ರಶ್ನಾಕೋಠಿಯನ್ನು ಬಳಸುವ ಬಗ್ಗೆ ಮುಖ್ಯ ಶಿಕ್ಷಕರು ಸಭೆ ನಡೆಸಿ ಎಲ್ಲಾ ಸಹ ಶಿಕ್ಷಕರಿಗೆ ಮಾಹಿತಿ ನೀಡಿರುವರೇ?"
+      }
+    ]
+  },
+  {
+    "point_no": 11,
+    "group": "B",
+    "title_kn": "ವಿದ್ಯಾರ್ಥಿಗಳ ನಿರಂತರ ಮೌಲ್ಯಮಾಪನ",
+    "title_en": "Continuous assessment of students",
+    "columns": [
+      {
+        "id": "lba_test_date",
+        "type": "date",
+        "label_kn": "L.B.A ಘಟಕ ಪರೀಕ್ಷೆ ನಡೆಸಿದ ದಿನಾಂಕ"
+      },
+      {
+        "id": "fa1_test_date",
+        "type": "date",
+        "label_kn": "F.A-1 ಪರೀಕ್ಷೆ ನಡೆಸಿದ ದಿನಾಂಕ"
+      },
+      {
+        "id": "evaluated_updated_sats_count",
+        "type": "number",
+        "label_kn": "ಮೌಲ್ಯಮಾಪನ ಮಾಡಿ SATS ನಲ್ಲಿ ಇಂದೀಕರಿಸಲಾದ ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "key_findings_and_remedial",
+        "type": "text",
+        "label_kn": "ವಿದ್ಯಾರ್ಥಿಗಳ ಪ್ರಗತಿ ವಿಶ್ಲೇಷಿಸಿ ಕಂಡುಕೊಂಡ ಪ್ರಮುಖಾಂಶಗಳು ಮತ್ತು ಪರಿಹಾರ ಕ್ರಮಗಳು"
+      },
+      {
+        "id": "info_from_all_teachers",
+        "type": "yes_no",
+        "label_kn": "ಎಲ್ಲಾ ವಿಷಯ ಶಿಕ್ಷಕರಿಂದ ಮಾಹಿತಿ ಪಡೆಯಲಾಗಿದೆಯೇ?"
+      }
+    ]
+  },
+  {
+    "point_no": 12,
+    "group": "B",
+    "title_kn": "Wakeup Call",
+    "title_en": "Wakeup Call",
+    "columns": [
+      {
+        "id": "student_count",
+        "type": "number",
+        "label_kn": "ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "students_assigned_per_teacher",
+        "type": "number",
+        "label_kn": "ಮುಖ್ಯ ಶಿಕ್ಷಕರು/ಪ್ರತಿ ಶಿಕ್ಷಕರಿಗೆ ಹಂಚಿಕೆ ಮಾಡಿದ ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "wakeup_call_time",
+        "type": "text",
+        "label_kn": "ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ Wakeup Call ಮಾಡುವ ಸಮಯ"
+      },
+      {
+        "id": "info_from_all_teachers",
+        "type": "yes_no",
+        "label_kn": "ಎಲ್ಲ ವಿಷಯ ಶಿಕ್ಷಕರಿಂದ ಮಾಹಿತಿ ಪಡೆಯಲಾಗಿದೆ"
+      },
+      {
+        "id": "verifying_officer_name",
+        "type": "text",
+        "label_kn": "Wakeup Call ಮಾಡಿದ ಬಗ್ಗೆ ಪರಿಶೀಲಿಸುವ ಅಧಿಕಾರಿಗಳ ಹೆಸರು"
+      }
+    ]
+  },
+  {
+    "point_no": 13,
+    "group": "B",
+    "title_kn": "ಕ್ರೀಡಾ ಅವಧಿ",
+    "title_en": "Sports period",
+    "columns": [
+      {
+        "id": "weekly_sports_period_details",
+        "type": "text",
+        "label_kn": "ಪ್ರತಿವಾರ ಮೀಸಲಿಟ್ಟ ಕ್ರೀಡಾ ಅವಧಿಯ ವಿವರ"
+      },
+      {
+        "id": "stress_relief_sports_plan",
+        "type": "text",
+        "label_kn": "ಒತ್ತಡ ಕಡಿಮೆ ಮಾಡಲು ಕೈಗೊಳ್ಳುವ ಕ್ರೀಡೆಗಳ ಕುರಿತು ಯೋಜನೆ"
+      }
+    ]
+  },
+  {
+    "point_no": 14,
+    "group": "B",
+    "title_kn": "ಮೊಬೈಲ್ ಫೋನ್ ಮತ್ತು ಸಾಮಾಜಿಕ ಜಾಲತಾಣಗಳ ಬಳಕೆಯ ಗೀಳನ್ನು ತಪ್ಪಿಸುವುದು",
+    "title_en": "Avoiding mobile phone and social media addiction",
+    "columns": [
+      {
+        "id": "activities_conducted",
+        "type": "text",
+        "label_kn": "ಮೊಬೈಲ್ ಫೋನ್ ಮತ್ತು ಸಾಮಾಜಿಕ ಜಾಲತಾಣಗಳ ಬಳಕೆಯ ಗೀಳನ್ನು ತಪ್ಪಿಸಲು ಕೈಗೊಳ್ಳುವ ಚಟುವಟಿಕೆಗಳ ವಿವರ"
+      }
+    ]
+  },
+  {
+    "point_no": 15,
+    "group": "B",
+    "title_kn": "ಶಾಲೆಯಲ್ಲಿಯೇ ಆರೋಗ್ಯ ತಪಾಸಣೆ",
+    "title_en": "Health checkup within school",
+    "columns": [
+      {
+        "id": "total_class10_students",
+        "type": "number",
+        "label_kn": "10 ನೇ ತರಗತಿಯ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "rbsk_checkup_date",
+        "type": "date",
+        "label_kn": "RBSK ತಂಡದೊಂದಿಗೆ ಸಮನ್ವಯ ಸಾಧಿಸಿ ವೈದ್ಯರು ತಪಾಸಣೆ ಮಾಡಿದ ದಿನಾಂಕ"
+      },
+      {
+        "id": "checked_students_count",
+        "type": "number",
+        "label_kn": "ಆರೋಗ್ಯ ತಪಾಸಣೆ ಮಾಡಿದ ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "malnourished_count",
+        "type": "number",
+        "label_kn": "ಪೌಷ್ಠಿಕ ನ್ಯೂನತೆಯಿರುವ ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "other_health_issues_count",
+        "type": "number",
+        "label_kn": "ಇತರೆ ಆರೋಗ್ಯ ಸಮಸ್ಯೆಯಿರುವ ಮಕ್ಕಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "suggested_remedy",
+        "type": "text",
+        "label_kn": "ಸೂಚಿಸಿದ ಪರಿಹಾರ/ಚಿಕಿತ್ಸೆ"
+      }
+    ]
+  },
+  {
+    "point_no": 16,
+    "group": "B",
+    "title_kn": "ಶಾಲೆಯಲ್ಲಿ ಶೈಕ್ಷಣಿಕ ವೃತ್ತಿ ಮಾರ್ಗದರ್ಶನ ಕಾರ್ಯಾಗಾರಗಳ ಆಯೋಜನೆ",
+    "title_en": "Organizing career guidance workshops in school",
+    "columns": [
+      {
+        "id": "nodal_teacher_name",
+        "type": "text",
+        "label_kn": "ವೃತ್ತಿ ಮಾರ್ಗದರ್ಶನ ನೀಡಲು ನೇಮಿಸಿದ ನೋಡಲ್ ಶಿಕ್ಷಕರ ಹೆಸರು"
+      },
+      {
+        "id": "workshops_planned_count",
+        "type": "number",
+        "label_kn": "ನಡೆಸಬೇಕಾದ ಕಾರ್ಯಾಗಾರಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "guidance_summary",
+        "type": "text",
+        "label_kn": "ನೀಡಬೇಕಾದ ವೃತ್ತಿ ಮಾರ್ಗದರ್ಶನದ ಸಂಕ್ಷಿಪ್ತ ವಿವರ"
+      }
+    ]
+  },
+  {
+    "point_no": 21,
+    "group": "B",
+    "title_kn": "ಶಾಲೆಯಲ್ಲಿ ಹತ್ತನೇ ತರಗತಿಯ ವಿದ್ಯಾರ್ಥಿಗಳ ಉತ್ತಮ ಕಲಿಕೆಗಾಗಿ ಮಾಹೆವಾರು ಪ್ರಗತಿ ಪರಿಶೀಲನಾ ಸಭೆ",
+    "title_en": "Monthly progress review meeting for class 10 students",
+    "note": "Group B confirmed: has date field (review_date) instead of month dropdown, per decision.",
+    "columns": [
+      {
+        "id": "review_date",
+        "type": "date",
+        "label_kn": "ಪ್ರಗತಿ ಪರಿಶೀಲನೆ ನಡೆಸಿದ ದಿನಾಂಕ"
+      },
+      {
+        "id": "progressed_count",
+        "type": "number",
+        "label_kn": "ಪ್ರಗತಿ ಸಾಧಿಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "not_progressed_count",
+        "type": "number",
+        "label_kn": "ಪ್ರಗತಿ ಸಾಧಿಸದೇ ಇರುವ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+      },
+      {
+        "id": "instructions_and_actions",
+        "type": "text",
+        "label_kn": "ನೀಡಿದ ಸೂಚನೆಗಳು ಹಾಗೂ ಮಾರ್ಗಸೂಚಿಗಳು ಹಾಗೂ ಕೈಗೊಂಡ ಕ್ರಮಗಳು"
+      }
+    ]
+  }
+]
