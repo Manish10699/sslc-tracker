@@ -148,5 +148,9 @@ cloudinary.config(
     api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
 )
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://sslc-tracker-frontend.vercel.app",
+]
+
+# CORS_ALLOW_ALL_ORIGINS = True
 
