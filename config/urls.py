@@ -6,6 +6,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from tracker.views import upload_photo
 from tracker.views import MeView
 from tracker.views import RegisterView
+from tracker.views import MonthStatusView
 
 
 
@@ -21,4 +22,5 @@ urlpatterns = [
     path('api/upload-photo/', upload_photo, name='upload-photo'),
     path('api/me/', MeView.as_view(), name='me'),
     path('api/register/', RegisterView.as_view(), name='register'),
+    path('api/month-status/', MonthStatusView.as_view(), name='month-status'),
 ]

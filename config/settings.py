@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
-    "tracker"
+    "tracker",
+    
 ]
 
 MIDDLEWARE = [
@@ -150,6 +151,7 @@ cloudinary.config(
 
 CORS_ALLOWED_ORIGINS = [
     "https://sslc-tracker-frontend.vercel.app",
+    "http://localhost:5173",
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
-from .models import PointTemplate, Entry
+from .models import MonthlySubmission, PointTemplate, Entry
 from .serializers import PointTemplateSerializer, EntrySerializer, RegisterSerializer
 import cloudinary.uploader
 from rest_framework.decorators import api_view, permission_classes
@@ -18,6 +18,7 @@ import requests
 from io import BytesIO
 from openpyxl.drawing.image import Image as XLImage
 from rest_framework.permissions import AllowAny
+from .utils import get_current_academic_year
 
 
 class PointTemplateViewSet(viewsets.ReadOnlyModelViewSet):
@@ -113,7 +114,7 @@ class EntryViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # Force the school to be the logged-in user's school - never trust the frontend for this
-        serializer.save(school=self.request.user.school)
+        serializer.save(school=self.request.user.school,academic_year = get_current_academic_year())
 
 
 
@@ -158,3 +159,31 @@ class RegisterView(APIView):
             {'message': 'Registration submitted. Please wait for approval before logging in.'},
             status=201
         )
+
+
+class MonthStatusView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        from .utils import get_current_academic_year
+        school = request.user.school
+        month = request.query_params.get('month')
+        academic_year = get_current_academic_year()
+
+        all_points = PointTemplate.objects.values_list('id', flat=True)
+        completed_point_ids = Entry.objects.filter(
+            school=school, month=month, academic_year=academic_year
+        ).values_list('point_id', flat=True)
+
+        is_locked = MonthlySubmission.objects.filter(
+            school=school, month=month, academic_year=academic_year
+        ).exists()
+
+        return Response({
+            'month': month,
+            'academic_year': academic_year,
+            'total_points': len(all_points),
+            'completed_point_ids': list(completed_point_ids),
+            'all_complete': set(all_points) == set(completed_point_ids),
+            'is_locked': is_locked,
+        })
