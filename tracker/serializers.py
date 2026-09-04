@@ -14,7 +14,7 @@ class EntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Entry
         fields = ['id', 'point', 'month', 'academic_year', 'data', 'created_at', 'updated_at']
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at', 'academic_year']
 
     def validate(self, attrs):
         request = self.context['request']

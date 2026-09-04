@@ -30,7 +30,10 @@ class PointTemplateViewSet(viewsets.ReadOnlyModelViewSet):
     def export(self, request, pk=None):
         point = self.get_object()
         school = request.user.school
+        month = request.query_params.get('month')
         entries = Entry.objects.filter(point=point, school=school)
+        if month:
+            entries = entries.filter(month=month)
         num_cols = len(point.columns)
 
         wb = Workbook()
@@ -87,6 +90,8 @@ class PointTemplateViewSet(viewsets.ReadOnlyModelViewSet):
                             ws.row_dimensions[row_num].height = 65
                         except Exception:
                             cell.value = 'Photo unavailable'
+                elif col['type'] == 'month_select':
+                    cell.value = entry.month
                 else:
                     cell.value = entry.data.get(col['id'], '')
 
@@ -110,6 +115,9 @@ class EntryViewSet(viewsets.ModelViewSet):
         point_id = self.request.query_params.get('point')
         if point_id:
             queryset = queryset.filter(point_id=point_id)
+        month = self.request.query_params.get('month')
+        if month:
+            queryset = queryset.filter(month=month)
         return queryset
 
     def perform_create(self, serializer):
@@ -187,3 +195,104 @@ class MonthStatusView(APIView):
             'all_complete': set(all_points) == set(completed_point_ids),
             'is_locked': is_locked,
         })
+
+
+class SubmitMonthView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        from .utils import get_current_academic_year
+        school = request.user.school
+        month = request.data.get('month')
+        academic_year = get_current_academic_year()
+
+        if not month:
+            return Response({'error': 'month is required'}, status=400)
+
+        # Re-check completion server-side — never trust the frontend's "all_complete" alone
+        all_points = PointTemplate.objects.all()
+        completed_ids = set(Entry.objects.filter(
+            school=school, month=month, academic_year=academic_year
+        ).values_list('point_id', flat=True))
+
+        if set(p.id for p in all_points) != completed_ids:
+            return Response({'error': 'Not all points are complete for this month.'}, status=400)
+
+        if MonthlySubmission.objects.filter(school=school, month=month, academic_year=academic_year).exists():
+            return Response({'error': 'This month has already been submitted.'}, status=400)
+
+        # Build the combined workbook
+        wb = Workbook()
+        wb.remove(wb.active)  # remove the default blank sheet
+
+        thin_border = Border(
+            left=Side(style='thin'), right=Side(style='thin'),
+            top=Side(style='thin'), bottom=Side(style='thin')
+        )
+        center_wrap = Alignment(horizontal='center', vertical='center', wrap_text=True)
+
+        for point in all_points.order_by('point_no'):
+            ws = wb.create_sheet(title=f"Point {point.point_no}")
+            num_cols = len(point.columns)
+            entry = Entry.objects.get(school=school, point=point, month=month, academic_year=academic_year)
+
+            ws.append([f"{point.point_no}) {point.title_kn}"])
+            ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=num_cols)
+            ws.cell(row=1, column=1).font = Font(bold=True, size=14)
+            ws.cell(row=1, column=1).alignment = center_wrap
+
+            ws.append([f"ಶಾಲೆ: {school.name}", f"ಜಿಲ್ಲೆ: {school.district}", f"ತಾಲೂಕು: {school.taluk}"])
+            for cell in ws[2]:
+                cell.font = Font(bold=True)
+            ws.append([])
+
+            headers = [col['label_kn'] for col in point.columns]
+            ws.append(headers)
+            for cell in ws[4]:
+                cell.font = Font(bold=True)
+                cell.alignment = center_wrap
+                cell.border = thin_border
+                cell.fill = PatternFill(start_color='D9D9D9', end_color='D9D9D9', fill_type='solid')
+
+            row_num = 5
+            ws.append(['' for _ in point.columns])
+            for col_idx, col in enumerate(point.columns, start=1):
+                cell = ws.cell(row=row_num, column=col_idx)
+                cell.border = thin_border
+                cell.alignment = Alignment(vertical='center', wrap_text=True)
+                if col['type'] == 'photo':
+                    photo_url = entry.data.get(col['id'])
+                    if photo_url:
+                        try:
+                            resp = requests.get(photo_url, timeout=10)
+                            img = XLImage(BytesIO(resp.content))
+                            img.width, img.height = 80, 80
+                            img.anchor = f"{get_column_letter(col_idx)}{row_num}"
+                            ws.add_image(img)
+                            ws.row_dimensions[row_num].height = 65
+                        except Exception:
+                            cell.value = 'Photo unavailable'
+
+                elif col['type'] == 'month_select':
+                    cell.value = entry.month
+                else:
+                    cell.value = entry.data.get(col['id'], '')
+
+            for col_idx in range(1, num_cols + 1):
+                ws.column_dimensions[get_column_letter(col_idx)].width = 25
+
+        buffer = BytesIO()
+        wb.save(buffer)
+        buffer.seek(0)
+
+        # Lock the month
+        MonthlySubmission.objects.create(school=school, month=month, academic_year=academic_year)
+
+        # (email sending goes here next — placeholder for now)
+
+        response = HttpResponse(
+            buffer.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{school.name}_{month}_{academic_year}.xlsx"'
+        return response
