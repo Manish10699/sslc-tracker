@@ -1,7 +1,12 @@
+from datetime import date
+
+from django.utils import timezone
+import os
+
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
-from .models import MonthlySubmission, PointTemplate, Entry
-from .serializers import PointTemplateSerializer, EntrySerializer, RegisterSerializer
+from .models import MonthlySubmission, Notification, PointTemplate, Entry, School
+from .serializers import NotificationSerializer, PointTemplateSerializer, EntrySerializer, RegisterSerializer
 import cloudinary.uploader
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -19,7 +24,12 @@ from io import BytesIO
 from openpyxl.drawing.image import Image as XLImage
 from rest_framework.permissions import AllowAny
 from .utils import get_current_academic_year
+from .utils import send_report_email
+from rest_framework.permissions import BasePermission
 
+class IsAdmin(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.role == 'admin'
 
 class PointTemplateViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = PointTemplate.objects.all()
@@ -148,6 +158,7 @@ class MeView(APIView):
         return Response({
             'username': user.username,
             'first_name': user.first_name,
+            'role': user.role,
             'school': {
                 'name': user.school.name if user.school else None,
                 'district': user.school.district if user.school else None,
@@ -289,10 +300,245 @@ class SubmitMonthView(APIView):
         MonthlySubmission.objects.create(school=school, month=month, academic_year=academic_year)
 
         # (email sending goes here next — placeholder for now)
+        excel_data = buffer.getvalue()
 
+        send_report_email(
+            to_email=os.getenv("OFFICER_EMAIL"),
+            file_data=excel_data,
+            filename=f"{school.name}_{month}_{academic_year}.xlsx",
+            school_name=school.name,
+            month=month,
+            academic_year=academic_year,
+        )
         response = HttpResponse(
             buffer.getvalue(),
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
         response['Content-Disposition'] = f'attachment; filename="{school.name}_{month}_{academic_year}.xlsx"'
         return response
+
+class AdminSchoolsView(APIView):
+    permission_classes = [IsAdmin]
+
+    def get(self, request):
+        from .utils import get_current_academic_year
+        month = request.query_params.get('month')
+        academic_year = get_current_academic_year()
+        total_points = PointTemplate.objects.count()
+
+        schools_data = []
+        submitted_count = 0
+
+        for school in School.objects.all():
+            submission = MonthlySubmission.objects.filter(
+                school=school, month=month, academic_year=academic_year
+            ).first()
+            completed = Entry.objects.filter(
+                school=school, month=month, academic_year=academic_year
+            ).count()
+
+            is_submitted = submission is not None
+            if is_submitted:
+                submitted_count += 1
+
+            schools_data.append({
+                'id': school.id,
+                'name': school.name,
+                'district': school.district,
+                'taluk': school.taluk,
+                'completed_points': completed,
+                'total_points': total_points,
+                'is_submitted': is_submitted,
+                'submitted_at': submission.submitted_at if submission else None,
+                'is_verified': submission.verified_at is not None if submission else False,
+            })
+
+        total_schools = len(schools_data)
+        return Response({
+            'month': month,
+            'academic_year': academic_year,
+            'total_schools': total_schools,
+            'submitted_count': submitted_count,
+            'pending_count': total_schools - submitted_count,
+            'schools': schools_data,
+        })
+
+class VerifySubmissionView(APIView):
+    permission_classes = [IsAdmin]
+
+    def post(self, request, school_id):
+        month = request.data.get('month')
+        from .utils import get_current_academic_year
+        academic_year = get_current_academic_year()
+
+        submission = MonthlySubmission.objects.filter(
+            school_id=school_id, month=month, academic_year=academic_year
+        ).first()
+
+        if not submission:
+            return Response({'error': 'This month has not been submitted yet.'}, status=400)
+
+        submission.verified_at = timezone.now()
+        submission.verified_by = request.user
+        submission.save()
+
+        Notification.objects.create(
+            school_id=school_id,
+            message=f"Your {month} {academic_year} report has been verified by the officer."
+        )
+
+        return Response({'message': 'Verified successfully.'})
+
+
+class AdminSchoolDetailView(APIView):
+    permission_classes = [IsAdmin]
+
+    def get(self, request, school_id):
+        month = request.query_params.get('month')
+        from .utils import get_current_academic_year
+        academic_year = get_current_academic_year()
+        school = School.objects.get(id=school_id)
+
+        entries = Entry.objects.filter(school=school, month=month, academic_year=academic_year)
+        entries_by_point = {e.point_id: EntrySerializer(e).data for e in entries}
+
+        points_data = []
+        for point in PointTemplate.objects.all().order_by('point_no'):
+            points_data.append({
+                'id': point.id,
+                'point_no': point.point_no,
+                'title_kn': point.title_kn,
+                'title_en': point.title_en,
+                'columns': point.columns,
+                'entry': entries_by_point.get(point.id),
+            })
+
+        submission = MonthlySubmission.objects.filter(
+            school=school, month=month, academic_year=academic_year
+        ).first()
+
+        return Response({
+            'school': {'name': school.name, 'district': school.district, 'taluk': school.taluk},
+            'points': points_data,
+            'is_submitted': submission is not None,
+            'is_verified': submission.verified_at is not None if submission else False,
+        })
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ['get', 'patch']  # no create/delete from the client side
+
+    def get_queryset(self):
+        return Notification.objects.filter(school=self.request.user.school)
+
+
+class AdminSchoolExportView(APIView):
+    permission_classes = [IsAdmin]
+
+    def get(self, request, school_id):
+        from .utils import get_current_academic_year
+        month = request.query_params.get('month')
+        academic_year = get_current_academic_year()
+        school = School.objects.get(id=school_id)
+        all_points = PointTemplate.objects.all().order_by('point_no')
+
+        wb = Workbook()
+        wb.remove(wb.active)
+        thin_border = Border(left=Side(style='thin'), right=Side(style='thin'),
+                              top=Side(style='thin'), bottom=Side(style='thin'))
+        center_wrap = Alignment(horizontal='center', vertical='center', wrap_text=True)
+
+        for point in all_points:
+            ws = wb.create_sheet(title=f"Point {point.point_no}")
+            num_cols = len(point.columns)
+            entry = Entry.objects.filter(school=school, point=point, month=month, academic_year=academic_year).first()
+
+            ws.append([f"{point.point_no}) {point.title_kn}"])
+            ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=num_cols)
+            ws.cell(row=1, column=1).font = Font(bold=True, size=14)
+            ws.cell(row=1, column=1).alignment = center_wrap
+
+            ws.append([f"ಶಾಲೆ: {school.name}", f"ಜಿಲ್ಲೆ: {school.district}", f"ತಾಲೂಕು: {school.taluk}"])
+            for cell in ws[2]:
+                cell.font = Font(bold=True)
+            ws.append([])
+
+            headers = [col['label_kn'] for col in point.columns]
+            ws.append(headers)
+            for cell in ws[4]:
+                cell.font = Font(bold=True)
+                cell.alignment = center_wrap
+                cell.border = thin_border
+                cell.fill = PatternFill(start_color='D9D9D9', end_color='D9D9D9', fill_type='solid')
+
+            row_num = 5
+            ws.append(['' for _ in point.columns])
+            if entry:
+                for col_idx, col in enumerate(point.columns, start=1):
+                    cell = ws.cell(row=row_num, column=col_idx)
+                    cell.border = thin_border
+                    cell.alignment = Alignment(vertical='center', wrap_text=True)
+                    if col['type'] == 'photo':
+                        photo_url = entry.data.get(col['id'])
+                        if photo_url:
+                            try:
+                                resp = requests.get(photo_url, timeout=10)
+                                img = XLImage(BytesIO(resp.content))
+                                img.width, img.height = 80, 80
+                                img.anchor = f"{get_column_letter(col_idx)}{row_num}"
+                                ws.add_image(img)
+                                ws.row_dimensions[row_num].height = 65
+                            except Exception:
+                                cell.value = 'Photo unavailable'
+                    elif col['type'] == 'month_select':
+                        cell.value = entry.month
+                    else:
+                        cell.value = entry.data.get(col['id'], '')
+
+            for col_idx in range(1, num_cols + 1):
+                ws.column_dimensions[get_column_letter(col_idx)].width = 25
+
+        buffer = BytesIO()
+        wb.save(buffer)
+        response = HttpResponse(
+            buffer.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{school.name}_{month}_{academic_year}.xlsx"'
+        return response
+
+
+class RunReminderCheckView(APIView):
+    permission_classes = [AllowAny]  # protected by a secret key instead of login
+
+    def post(self, request):
+        secret = request.headers.get('X-Cron-Secret')
+        if secret != os.environ.get('CRON_SECRET'):
+            return Response({'error': 'Unauthorized'}, status=401)
+
+        from .utils import get_current_academic_year
+        today = date.today()
+        if today.day < 25:
+            return Response({'message': 'Not yet the 25th, skipping.'})
+
+        month = today.strftime('%B')
+        academic_year = get_current_academic_year()
+        created = 0
+
+        for school in School.objects.all():
+            already_submitted = MonthlySubmission.objects.filter(
+                school=school, month=month, academic_year=academic_year
+            ).exists()
+            already_reminded = Notification.objects.filter(
+                school=school, message__icontains=f"reminder for {month}"
+            ).exists()
+
+            if not already_submitted and not already_reminded:
+                Notification.objects.create(
+                    school=school,
+                    message=f"Reminder for {month} {academic_year}: please complete and submit your report."
+                )
+                created += 1
+
+        return Response({'message': f'Created {created} reminder(s).'})

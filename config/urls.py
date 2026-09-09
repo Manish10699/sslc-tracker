@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from tracker.views import PointTemplateViewSet, EntryViewSet
+from tracker.views import AdminSchoolExportView, AdminSchoolsView, NotificationViewSet, PointTemplateViewSet, EntryViewSet, RunReminderCheckView, VerifySubmissionView, AdminSchoolDetailView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from tracker.views import upload_photo
 from tracker.views import MeView
@@ -14,6 +14,7 @@ from tracker.views import SubmitMonthView
 router = DefaultRouter()
 router.register('points', PointTemplateViewSet, basename='point')
 router.register('entries', EntryViewSet, basename='entry')
+router.register('notifications', NotificationViewSet, basename='notification')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,11 @@ urlpatterns = [
     path('api/register/', RegisterView.as_view(), name='register'),
     path('api/month-status/', MonthStatusView.as_view(), name='month-status'),
     path('api/submit-month/', SubmitMonthView.as_view(), name='submit-month'),
+    path('api/admin/schools/', AdminSchoolsView.as_view(), name='admin-schools'),
+    path('api/admin/schools/<int:school_id>/', AdminSchoolDetailView.as_view(), name='admin-school-detail'),
+    path('api/admin/schools/<int:school_id>/verify/', VerifySubmissionView.as_view(), name='verify-submission'),
+    path('api/admin/schools/<int:school_id>/export/', AdminSchoolExportView.as_view(), name='admin-school-export'),
+    path('api/run-reminder-check/', RunReminderCheckView.as_view(), name='run-reminder-check'),
+
+
 ]

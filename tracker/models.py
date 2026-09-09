@@ -51,6 +51,8 @@ class MonthlySubmission(models.Model):
     month = models.CharField(max_length=20)
     academic_year = models.CharField(max_length=10)
     submitted_at = models.DateTimeField(auto_now_add=True)
+    verified_at = models.DateTimeField(null=True, blank=True)
+    verified_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='verifications')
 
     class Meta:
         unique_together = ('school', 'month', 'academic_year')
@@ -58,5 +60,15 @@ class MonthlySubmission(models.Model):
     def __str__(self):
         return f"{self.school.name} - {self.month} {self.academic_year} submitted"
 
+class Notification(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='notifications')
+    message = models.CharField(max_length=500)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.school.name}: {self.message}"
     
