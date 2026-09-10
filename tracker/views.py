@@ -26,6 +26,9 @@ from rest_framework.permissions import AllowAny
 from .utils import get_current_academic_year
 from .utils import send_report_email
 from rest_framework.permissions import BasePermission
+from .utils import get_current_academic_year
+
+
 
 class IsAdmin(BasePermission):
     def has_permission(self, request, view):
@@ -517,10 +520,10 @@ class RunReminderCheckView(APIView):
         if secret != os.environ.get('CRON_SECRET'):
             return Response({'error': 'Unauthorized'}, status=401)
 
-        from .utils import get_current_academic_year
+
         today = date.today()
-        if today.day < 25:
-            return Response({'message': 'Not yet the 25th, skipping.'})
+        # if today.day < 25:
+        #     return Response({'message': 'Not yet the 25th, skipping.'})
 
         month = today.strftime('%B')
         academic_year = get_current_academic_year()
