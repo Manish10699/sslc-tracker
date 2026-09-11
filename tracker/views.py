@@ -204,8 +204,8 @@ class MonthStatusView(APIView):
         return Response({
             'month': month,
             'academic_year': academic_year,
-            'total_points': len(all_points),
-            'completed_point_ids': list(completed_point_ids),
+            'total_points': all_points.count(),
+            'completed_point_ids': [point_id for point_id in completed_point_ids],
             'all_complete': set(all_points) == set(completed_point_ids),
             'is_locked': is_locked,
         })
@@ -548,4 +548,3 @@ class RunReminderCheckView(APIView):
 
 
 
-        
