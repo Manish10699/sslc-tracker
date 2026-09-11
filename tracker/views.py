@@ -534,7 +534,7 @@ class RunReminderCheckView(APIView):
                 school=school, month=month, academic_year=academic_year
             ).exists()
             already_reminded = Notification.objects.filter(
-                school=school, message__icontains=f"reminder for {month}"
+                school=school, message__icontains=f"reminder for {month} {academic_year}"
             ).exists()
 
             if not already_submitted and not already_reminded:
