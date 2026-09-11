@@ -522,8 +522,8 @@ class RunReminderCheckView(APIView):
 
 
         today = date.today()
-        # if today.day < 25:
-        #     return Response({'message': 'Not yet the 25th, skipping.'})
+        if today.day < 25:
+            return Response({'message': 'Not yet the 25th, skipping.'})
 
         month = today.strftime('%B')
         academic_year = get_current_academic_year()
@@ -545,3 +545,7 @@ class RunReminderCheckView(APIView):
                 created += 1
 
         return Response({'message': f'Created {created} reminder(s).'})
+
+
+
+        
