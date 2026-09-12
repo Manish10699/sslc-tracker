@@ -8,6 +8,8 @@ from tracker.views import MeView
 from tracker.views import RegisterView
 from tracker.views import MonthStatusView
 from tracker.views import SubmitMonthView
+from tracker.views import ConsolidatedExportView
+
 
 
 
@@ -31,6 +33,6 @@ urlpatterns = [
     path('api/admin/schools/<int:school_id>/verify/', VerifySubmissionView.as_view(), name='verify-submission'),
     path('api/admin/schools/<int:school_id>/export/', AdminSchoolExportView.as_view(), name='admin-school-export'),
     path('api/run-reminder-check/', RunReminderCheckView.as_view(), name='run-reminder-check'),
-
+    path('api/admin/consolidated-export/', ConsolidatedExportView.as_view(), name='consolidated-export'),
 
 ]

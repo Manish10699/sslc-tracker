@@ -547,4 +547,93 @@ class RunReminderCheckView(APIView):
         return Response({'message': f'Created {created} reminder(s).'})
 
 
+class ConsolidatedExportView(APIView):
+    permission_classes = [IsAdmin]
+
+    def get(self, request):
+        from .utils import get_current_academic_year
+        month = request.query_params.get('month')
+        academic_year = get_current_academic_year()
+
+        submitted_school_ids = MonthlySubmission.objects.filter(
+            month=month, academic_year=academic_year
+        ).values_list('school_id', flat=True)
+        schools = School.objects.filter(id__in=submitted_school_ids).order_by('name')
+
+        wb = Workbook()
+        wb.remove(wb.active)
+        thin_border = Border(left=Side(style='thin'), right=Side(style='thin'),
+                              top=Side(style='thin'), bottom=Side(style='thin'))
+        center_wrap = Alignment(horizontal='center', vertical='center', wrap_text=True)
+        header_fill = PatternFill(start_color='D9D9D9', end_color='D9D9D9', fill_type='solid')
+
+        for point in PointTemplate.objects.all().order_by('point_no'):
+            ws = wb.create_sheet(title=f"Point {point.point_no}")
+            num_data_cols = len(point.columns)
+            total_cols = 2 + num_data_cols  # serial + school name + this point's fields
+
+            ws.append([f"{point.point_no}) {point.title_kn}"])
+            ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=total_cols)
+            ws.cell(row=1, column=1).font = Font(bold=True, size=14)
+            ws.cell(row=1, column=1).alignment = center_wrap
+            ws.append([])
+
+            headers = ['ಕ್ರ.ಸಂ', 'ಶಾಲೆಯ ಹೆಸರು'] + [col['label_kn'] for col in point.columns]
+            ws.append(headers)
+            header_row_num = 3
+            for cell in ws[header_row_num]:
+                cell.font = Font(bold=True)
+                cell.alignment = center_wrap
+                cell.border = thin_border
+                cell.fill = header_fill
+
+            row_num = header_row_num
+            for idx, school in enumerate(schools, start=1):
+                row_num += 1
+                entry = Entry.objects.filter(
+                    school=school, point=point, month=month, academic_year=academic_year
+                ).first()
+
+                ws.cell(row=row_num, column=1, value=idx).border = thin_border
+                ws.cell(row=row_num, column=2, value=school.name).border = thin_border
+
+                for col_idx, col in enumerate(point.columns, start=3):
+                    cell = ws.cell(row=row_num, column=col_idx)
+                    cell.border = thin_border
+                    cell.alignment = Alignment(vertical='center', wrap_text=True)
+                    if not entry:
+                        continue
+                    if col['type'] == 'photo':
+                        photo_url = entry.data.get(col['id'])
+                        if photo_url:
+                            try:
+                                resp = requests.get(photo_url, timeout=10)
+                                img = XLImage(BytesIO(resp.content))
+                                img.width, img.height = 60, 60
+                                img.anchor = f"{get_column_letter(col_idx)}{row_num}"
+                                ws.add_image(img)
+                                ws.row_dimensions[row_num].height = 50
+                            except Exception:
+                                cell.value = 'Unavailable'
+                    elif col['type'] == 'month_select':
+                        cell.value = entry.month
+                    else:
+                        cell.value = entry.data.get(col['id'], '')
+
+            ws.column_dimensions['A'].width = 8
+            ws.column_dimensions['B'].width = 30
+            for col_idx in range(3, total_cols + 1):
+                ws.column_dimensions[get_column_letter(col_idx)].width = 25
+
+        buffer = BytesIO()
+        wb.save(buffer)
+        response = HttpResponse(
+            buffer.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="Consolidated_{month}_{academic_year}.xlsx"'
+        return response
+
+
+
 
