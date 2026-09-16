@@ -58,6 +58,7 @@ class RegisterSerializer(serializers.Serializer):
             name=validated_data['school_name'],
             district=validated_data['district'],
             taluk=validated_data['taluk'],
+            udise_code=None,
         )
         user = User(
             username=validated_data['username'],

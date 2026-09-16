@@ -4,7 +4,7 @@ class School(models.Model):
     name = models.CharField(max_length=255)
     district = models.CharField(max_length=100)
     taluk = models.CharField(max_length=100)
-    udise_code = models.CharField(max_length=20, unique=True)
+    udise_code = models.CharField(max_length=20, unique=True, null=True, blank=True)    
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
