@@ -1,7 +1,7 @@
 from datetime import date
+import os
 
 from django.utils import timezone
-import os
 
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
@@ -24,7 +24,6 @@ from io import BytesIO
 from openpyxl.drawing.image import Image as XLImage
 from rest_framework.permissions import AllowAny
 from .utils import get_current_academic_year
-from .utils import send_report_email
 from rest_framework.permissions import BasePermission
 from .utils import get_current_academic_year
 
@@ -302,17 +301,6 @@ class SubmitMonthView(APIView):
         # Lock the month
         MonthlySubmission.objects.create(school=school, month=month, academic_year=academic_year)
 
-        # (email sending goes here next — placeholder for now)
-        excel_data = buffer.getvalue()
-
-        send_report_email(
-            to_email=os.getenv("OFFICER_EMAIL"),
-            file_data=excel_data,
-            filename=f"{school.name}_{month}_{academic_year}.xlsx",
-            school_name=school.name,
-            month=month,
-            academic_year=academic_year,
-        )
         response = HttpResponse(
             buffer.getvalue(),
             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -633,7 +621,6 @@ class ConsolidatedExportView(APIView):
         )
         response['Content-Disposition'] = f'attachment; filename="Consolidated_{month}_{academic_year}.xlsx"'
         return response
-
 
 
 
