@@ -4,9 +4,9 @@ import os
 from django.utils import timezone
 
 from django.shortcuts import render
-from rest_framework import viewsets, permissions
-from .models import MonthlySubmission, Notification, PointTemplate, Entry, School
-from .serializers import NotificationSerializer, PointTemplateSerializer, EntrySerializer, RegisterSerializer
+from rest_framework import status, viewsets, permissions
+from .models import MonthlySubmission, Notification, PointTemplate, Entry, PushSubscription, School
+from .serializers import NotificationSerializer, PointTemplateSerializer, EntrySerializer, PushSubscriptionSerializer, RegisterSerializer
 import cloudinary.uploader
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -622,5 +622,29 @@ class ConsolidatedExportView(APIView):
         response['Content-Disposition'] = f'attachment; filename="Consolidated_{month}_{academic_year}.xlsx"'
         return response
 
+class PushSubscriptionView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def post(self, request):
+        serializer = PushSubscriptionSerializer(data=request.data)
+
+        if serializer.is_valid():
+            PushSubscription.objects.update_or_create(
+                endpoint=serializer.validated_data['endpoint'],
+                defaults={
+                    'user': request.user,
+                    'p256dh': serializer.validated_data['p256dh'],
+                    'auth': serializer.validated_data['auth'],
+                }
+            )
+
+            return Response(
+                {'message': 'Push subscription saved successfully'},
+                status=status.HTTP_201_CREATED
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 

@@ -76,3 +76,14 @@ class NotificationSerializer(serializers.ModelSerializer):
         model = Notification
         fields = ['id', 'message', 'is_read', 'created_at']
         read_only_fields = ['id', 'message', 'created_at']
+
+
+class PushSubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PushSubscription
+        fields = ['id', 'endpoint', 'p256dh', 'auth']
+        extra_kwargs = {
+            'endpoint': {
+                'validators': []
+            }
+        }

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from tracker.views import AdminSchoolExportView, AdminSchoolsView, NotificationViewSet, PointTemplateViewSet, EntryViewSet, RunReminderCheckView, VerifySubmissionView, AdminSchoolDetailView
+from tracker.views import AdminSchoolExportView, AdminSchoolsView, NotificationViewSet, PointTemplateViewSet, EntryViewSet, PushSubscriptionView, RunReminderCheckView, VerifySubmissionView, AdminSchoolDetailView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from tracker.views import upload_photo
 from tracker.views import MeView
@@ -34,5 +34,5 @@ urlpatterns = [
     path('api/admin/schools/<int:school_id>/export/', AdminSchoolExportView.as_view(), name='admin-school-export'),
     path('api/run-reminder-check/', RunReminderCheckView.as_view(), name='run-reminder-check'),
     path('api/admin/consolidated-export/', ConsolidatedExportView.as_view(), name='consolidated-export'),
-
+    path('api/push-subscription/', PushSubscriptionView.as_view(), name='push-subscription'),
 ]
