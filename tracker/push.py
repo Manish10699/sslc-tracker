@@ -26,11 +26,9 @@ def send_push_notification(user, title, message):
                     "body": message,
                 }),
                 vapid_private_key=os.environ.get("VAPID_PRIVATE_KEY_PATH"),
-                vapid_claims={
-                    "sub": os.environ.get(
-                        "VAPID_CLAIMS_EMAIL"
-                    )
-                },
+                vapid_claims = {
+    "sub": f"mailto:{os.getenv('VAPID_CLAIMS_EMAIL')}",
+},
             )
 
         except WebPushException as e:

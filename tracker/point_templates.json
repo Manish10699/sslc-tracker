@@ -17,13 +17,13 @@
       },
       {
         "id": "monthly_lessons_ontrack",
-        "type": "yes_no",
-        "label_kn": "ವಾರ್ಷಿಕ ಪಾಠಯೋಜನೆಯನ್ವಯ ಪ್ರತಿ ತಿಂಗಳು ನಿಗದಿಪಡಿಸಿದ ಪಾಠಗಳ ಬೋಧನೆಯು ಎಲ್ಲಾ ವಿಷಯಗಳಲ್ಲಿ ನಡೆಯುತ್ತಿದೆಯೇ?"
+        "type": "number",
+        "label_kn": "ವಾರ್ಷಿಕ ಪಾಠಯೋಜನೆಯನ್ವಯ ಪ್ರತಿ ತಿಂಗಳು ನಿಗದಿಪಡಿಸಿದ ಪಾಠಗಳ ಬೋಧನೆಯು ಎಲ್ಲಾ ವಿಷಯಗಳಲ್ಲಿ ನಡೆಯುತ್ತಿರುವ ಸಂಖ್ಯೆ"
       },
       {
         "id": "lba_updated_sats",
-        "type": "yes_no",
-        "label_kn": "ಪಾಠಯೋಜನೆಯನ್ನು LBA ಪ್ರಕಾರ SATSನಲ್ಲಿ ಇಂದೀಕರಿಸಲಾಗಿದೆ"
+        "type": "number",
+        "label_kn": "ಪಾಠಯೋಜನೆಯನ್ನು LBA ಪ್ರಕಾರ SATSನಲ್ಲಿ ಇಂದೀಕರಿಸಿದ ಸಂಖ್ಯೆ"
       },
       {
         "id": "info_from_all_teachers",
@@ -156,8 +156,8 @@
       },
       {
         "id": "special_classes_conducted",
-        "type": "yes_no",
-        "label_kn": "ಪ್ರತಿದಿನ ಶಾಲಾವಧಿ ನಂತರ ವಿಶೇಷ ತರಗತಿಗಳನ್ನು ಆಯೋಜಿಸಲಾಗಿದೆ?"
+        "type": "number",
+        "label_kn": "ಪ್ರತಿದಿನ ಶಾಲಾವಧಿ ನಂತರ ವಿಶೇಷ ತರಗತಿಗಳನ್ನು ಆಯೋಜಿಸಲಾದ ಸಂಖ್ಯೆ?"
       },
       {
         "id": "writing_classes_conducted",
@@ -380,7 +380,8 @@
       {
         "id": "progress_achieved_count",
         "type": "number",
-        "label_kn": "ಕಲಿಕಾ ಪ್ರಗತಿ ಸಾಧಿಸಿರುವ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+        "label_kn": "ಕಲಿಕಾ ಪ್ರಗತಿ ಸಾಧಿಸಿರುವ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ",
+        "computed_from": ["student_count", "slow_learners_identified"]
       },
       {
         "id": "buddy_groups_formed",
@@ -400,7 +401,8 @@
       {
         "id": "not_progressed_count",
         "type": "number",
-        "label_kn": "ಪ್ರಗತಿ ಸಾಧಿಸದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ"
+        "label_kn": "ಪ್ರಗತಿ ಸಾಧಿಸದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ",
+        "computed_from": ["slow_learners_identified", "progressed_after_pairing_count"]
       },
       {
         "id": "remedial_measures",
@@ -611,6 +613,64 @@
       }
     ]
   },
+  {
+  "point_no": 19,
+  "group": "B",
+  "title_kn": "ಶಿಕ್ಷಣ ಇಲಾಖೆಯ ಅಧಿಕಾರಿಗಳಿಗೆ ಶಾಲಾ ದತ್ತು ಕಾರ್ಯಕ್ರಮ",
+  "title_en": "School Adoption Programme for Education Department Officers",
+  "columns": [
+    {
+      "id": "on_watch_list",
+      "type": "text",
+      "label_kn": " Watch list ನಲ್ಲಿರುವ ಶಾಲೆಗಳು",
+      "note": "REVIEW: original column was a list of watch-listed schools (multi-school sheet). Reinterpreted as a yes/no for this one school — confirm this matches intent."
+    },
+    {
+      "id": "adopting_officer_name",
+      "type": "text",
+      "label_kn": "ದತ್ತು ನೀಡಿದ ಅಧಿಕಾರಿಗಳ ಹೆಸರು"
+    },
+    {
+      "id": "visit_days_count",
+      "type": "number",
+      "label_kn": "ಭೇಟಿ ನೀಡಿದ ದಿನಗಳ ಸಂಖ್ಯೆ"
+    },
+    {
+      "id": "action_review_report",
+      "type": "text",
+      "label_kn": "ಕೈಗೊಂಡ ಕ್ರಮಗಳ ಪರಿಶೀಲನಾ ವರದಿ"
+    },
+    {
+      "id": "photo",
+      "type": "photo",
+      "label_kn": "ಶಾಲೆಗೆ ಭೇಟಿ ನೀಡಿದ ಸಂದರ್ಭದ ಜಿಯೋ ಟ್ಯಾಗ್ ಫೋಟೋ ಲಗತ್ತಿಸುವುದು"
+    }
+  ]
+},
+{
+  "point_no": 20,
+  "group": "B",
+  "title_kn": "ಶುಕ್ರವಾರ ಶಾಲಾ ಭೇಟಿ",
+  "title_en": "Fortnightly School Visit",
+  "columns": [
+    {
+      "id": "visiting_officer_name",
+      "type": "text",
+      "label_kn": "ಶುಕ್ರವಾರ ಶಾಲೆಗೆ ಭೇಟಿ ನೀಡಿದ ಅಧಿಕಾರಿಯ ಹೆಸರು"
+    },
+    {
+      "id": "updated_in_sats",
+      "type": "yes_no",
+      "label_kn": "ಭೇಟಿ ಮಾಹಿತಿಯನ್ನು SATS Inspection App ನಲ್ಲಿ ಇಂದೀಕರಿಸಲಾಗಿದೆಯೇ?"
+    },
+    {
+      "id": "photo",
+      "type": "photo",
+      "label_kn": "ಶಾಲೆಗೆ ಭೇಟಿ ನೀಡಿದ ಜಿಯೋ ಟ್ಯಾಗ್ ಫೋಟೋ ಲಗತ್ತಿಸುವುದು"
+    }
+  ]
+}
+  ,
   {
     "point_no": 21,
     "group": "B",
