@@ -91,7 +91,7 @@
       },
       {
         "id": "remedial_period",
-        "type": "text",
+        "type": "time",
         "label_kn": "ಪರಿಹಾರ ಬೋಧನೆ ಮಾಡುವ ಅವಧಿ"
       },
       {
@@ -229,6 +229,7 @@
     "group": "B",
     "title_kn": "ಬೆಳಗಿನ ಪ್ರಾರ್ಥನಾ ಅವಧಿಯ ಚಟುವಟಿಕೆಗಳು",
     "title_en": "Morning prayer period activities",
+    "suggestions": ["ಯೋಗ ಮತ್ತು ಧ್ಯಾನ", "ಸ್ವಚ್ಛತೆ ಮತ್ತು ಆರೋಗ್ಯ", "ಪ್ರೇರಣಾದಾಯಕ ಕಥೆ"],
     "columns": [
       {
         "id": "student_count",
@@ -265,7 +266,7 @@
     "columns": [
       {
         "id": "meeting_date",
-        "type": "date",
+        "type": "text",
         "label_kn": "ಪೋಷಕ ಶಿಕ್ಷಕರ ಸಭೆಗಳನ್ನು ನಡೆಸಲು ನಿಗದಿಪಡಿಸಿದ ದಿನಾಂಕಗಳು"
       },
       {
@@ -463,12 +464,12 @@
     "columns": [
       {
         "id": "lba_test_date",
-        "type": "date",
+        "type": "text",
         "label_kn": "L.B.A ಘಟಕ ಪರೀಕ್ಷೆ ನಡೆಸಿದ ದಿನಾಂಕ"
       },
       {
         "id": "fa1_test_date",
-        "type": "date",
+        "type": "text",
         "label_kn": "F.A-1 ಪರೀಕ್ಷೆ ನಡೆಸಿದ ದಿನಾಂಕ"
       },
       {
@@ -506,7 +507,7 @@
       },
       {
         "id": "wakeup_call_time",
-        "type": "text",
+        "type": "time",
         "label_kn": "ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ Wakeup Call ಮಾಡುವ ಸಮಯ"
       },
       {
@@ -565,7 +566,7 @@
       },
       {
         "id": "rbsk_checkup_date",
-        "type": "date",
+        "type": "text",
         "label_kn": "RBSK ತಂಡದೊಂದಿಗೆ ಸಮನ್ವಯ ಸಾಧಿಸಿ ವೈದ್ಯರು ತಪಾಸಣೆ ಮಾಡಿದ ದಿನಾಂಕ"
       },
       {
@@ -619,12 +620,6 @@
   "title_kn": "ಶಿಕ್ಷಣ ಇಲಾಖೆಯ ಅಧಿಕಾರಿಗಳಿಗೆ ಶಾಲಾ ದತ್ತು ಕಾರ್ಯಕ್ರಮ",
   "title_en": "School Adoption Programme for Education Department Officers",
   "columns": [
-    {
-      "id": "on_watch_list",
-      "type": "text",
-      "label_kn": " Watch list ನಲ್ಲಿರುವ ಶಾಲೆಗಳು",
-      "note": "REVIEW: original column was a list of watch-listed schools (multi-school sheet). Reinterpreted as a yes/no for this one school — confirm this matches intent."
-    },
     {
       "id": "adopting_officer_name",
       "type": "text",
@@ -680,7 +675,7 @@
     "columns": [
       {
         "id": "review_date",
-        "type": "date",
+        "type": "text",
         "label_kn": "ಪ್ರಗತಿ ಪರಿಶೀಲನೆ ನಡೆಸಿದ ದಿನಾಂಕ"
       },
       {
