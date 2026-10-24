@@ -164,6 +164,7 @@ class MeView(APIView):
             'school': {
                 'name': user.school.name if user.school else None,
                 'district': user.school.district if user.school else None,
+                'taluk': user.school.taluk if user.school else None,
             }
         })
 
