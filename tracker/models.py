@@ -25,7 +25,7 @@ class PointTemplate(models.Model):
     columns = models.JSONField()
 
     class Meta:
-        ordering = ['id']
+        ordering = ['point_no']
 
     def __str__(self):
         return f"{self.point_no}. {self.title_en}"
